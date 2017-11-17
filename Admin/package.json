@@ -11,11 +11,7 @@
     "test": "npm run lint",
     "icon": "./node_modules/.bin/vsvg -s ./assets/icon -t ./common/svgicon"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/iview/iview-admin.git"
-  },
-  "author": "",
+  "author": "Hanrea",
   "license": "MIT",
   "dependencies": {
     "area-data": "^1.0.0",

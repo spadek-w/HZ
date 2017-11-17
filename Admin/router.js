@@ -1,5 +1,98 @@
 import Main from './view/Main.vue';
 
+// 作为Main组件的子页面展示但是不在左侧菜单显示的路由写在otherRouter里
+export const otherRouter = {
+    path: '/',
+    name: 'otherRouter',
+    component: Main,
+    children: [
+        { path: 'home', title: { i18n: 'home' }, name: 'home_index', component: resolve => { require(['./view/home/home.vue'], resolve); } },
+        { path: 'message', title: '消息中心', name: 'message_index', component: resolve => { require(['./view/common/message.vue'], resolve); } }
+    ]
+};
+
+// 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
+export const appRouter = [
+    {
+        path: '/user',
+        icon: 'person',
+        title: '用户管理',
+        name: 'user',
+        access: 0, // 访问权限
+        component: Main,
+        children: [
+            { path: 'index', title: '概览', icon: 'shuffle', name: 'user_index', component: resolve => { require(['./view/user/index.vue'], resolve); } },
+            { path: 'list', title: '列表', icon: 'ios-list', name: 'user_list', component: resolve => { require(['./view/user/list.vue'], resolve); } },
+            { path: 'show', title: '详情', icon: 'ios-browsers', name: 'user_show', component: resolve => { require(['./view/user/show.vue'], resolve); } }
+        ]
+    },
+    {
+        path: '/live',
+        icon: 'person',
+        title: '直播管理',
+        name: 'live',
+        access: 0,
+        component: Main,
+        children: [
+            { path: 'index', title: '概览', icon: 'shuffle', name: 'live_index', component: resolve => { require(['./view/user/index.vue'], resolve); } },
+            { path: 'list', title: '列表', icon: 'ios-list', name: 'live_list', component: resolve => { require(['./view/user/list.vue'], resolve); } },
+            { path: 'show', title: '详情', icon: 'ios-browsers', name: 'live_show', component: resolve => { require(['./view/user/show.vue'], resolve); } }
+        ]
+    },
+    {
+        path: '/video',
+        icon: 'person',
+        title: '视频管理',
+        name: 'video',
+        access: 0,
+        component: Main,
+        children: [
+            { path: 'index', title: '概览', icon: 'shuffle', name: 'video_index', component: resolve => { require(['./view/user/index.vue'], resolve); } },
+            { path: 'list', title: '列表', icon: 'ios-list', name: 'video_list', component: resolve => { require(['./view/user/list.vue'], resolve); } },
+            { path: 'show', title: '详情', icon: 'ios-browsers', name: 'video_show', component: resolve => { require(['./view/user/show.vue'], resolve); } }
+        ]
+    },
+    {
+        path: '/config',
+        icon: 'person',
+        title: '配置管理',
+        name: 'config',
+        access: 0,
+        component: Main,
+        children: [
+            { path: 'index', title: '概览', icon: 'shuffle', name: 'config_index', component: resolve => { require(['./view/user/index.vue'], resolve); } },
+            { path: 'list', title: '列表', icon: 'ios-list', name: 'config_list', component: resolve => { require(['./view/user/list.vue'], resolve); } },
+            { path: 'show', title: '详情', icon: 'ios-browsers', name: 'config_show', component: resolve => { require(['./view/user/show.vue'], resolve); } }
+        ]
+    },
+    {
+        path: '/active',
+        icon: 'person',
+        title: '活动管理',
+        name: 'active',
+        access: 0,
+        component: Main,
+        children: [
+            { path: 'index', title: '概览', icon: 'shuffle', name: 'active_index', component: resolve => { require(['./view/user/index.vue'], resolve); } },
+            { path: 'list', title: '列表', icon: 'ios-list', name: 'active_list', component: resolve => { require(['./view/user/list.vue'], resolve); } },
+            { path: 'show', title: '详情', icon: 'ios-browsers', name: 'active_show', component: resolve => { require(['./view/user/show.vue'], resolve); } }
+        ]
+    },
+    {
+        path: '/tool',
+        icon: 'person',
+        title: '系统工具',
+        name: 'tool',
+        access: 0,
+        component: Main,
+        children: [
+            { path: 'index', title: '概览', icon: 'shuffle', name: 'tool_index', component: resolve => { require(['./view/user/index.vue'], resolve); } },
+            { path: 'error', title: '错误', icon: 'bug', name: 'tool_error', component: resolve => { require(['./view/tool/error.vue'], resolve); } },
+            { path: 'show', title: '详情', icon: 'ios-browsers', name: 'tool_show', component: resolve => { require(['./view/user/show.vue'], resolve); } }
+        ]
+    }
+];
+
 // 不作为Main组件的子页面展示的页面单独写，如下
 export const loginRouter = {
     path: '/login',
@@ -7,13 +100,13 @@ export const loginRouter = {
     meta: {
         title: 'Login - 登录'
     },
-    component: resolve => { require(['./view/login.vue'], resolve); }
+    component: resolve => { require(['./view/common/login.vue'], resolve); }
 };
 
 export const locking = {
     path: '/locking',
     name: 'locking',
-    component: resolve => { require(['./view/layout/locking-page.vue'], resolve); }
+    component: resolve => { require(['./view/common/locking.vue'], resolve); }
 };
 
 export const page404 = {
@@ -42,32 +135,6 @@ export const page500 = {
     name: 'error_500',
     component: resolve => { require(['./view/common/500.vue'], resolve); }
 };
-
-// 作为Main组件的子页面展示但是不在左侧菜单显示的路由写在otherRouter里
-export const otherRouter = {
-    path: '/',
-    name: 'otherRouter',
-    component: Main,
-    children: [
-        { path: 'home', title: {i18n: 'home'}, name: 'home_index', component: resolve => { require(['./view/home/home.vue'], resolve); } },
-        { path: 'message', title: '消息中心', name: 'message_index', component: resolve => { require(['./view/common/message.vue'], resolve); } }
-    ]
-};
-
-// 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
-export const appRouter = [
-    {
-        path: '/access-test',
-        icon: 'lock-combination',
-        title: '权限测试页',
-        name: 'accesstest',
-        access: 0,
-        component: Main,
-        children: [
-            { path: 'index', title: '权限测试页', name: 'accesstest_index' }
-        ]
-    }
-];
 
 // 所有上面定义的路由都要写在下面的routers里
 export const routers = [

@@ -261,7 +261,7 @@
                 } else if (hour >= 9 && hour < 12) {
                     greetingWord = {title: '上午好~' + userName, words: '工作要加油哦~'};
                 } else if (hour >= 12 && hour < 14) {
-                    greetingWord = {title: '中午好~' + userName, words: '午饭要吃饱~'};
+                    greetingWord = {title: '中午好~' + userName, words: '午饭过后要休息会哦~'};
                 } else if (hour >= 14 && hour < 17) {
                     greetingWord = {title: '下午好~' + userName, words: '下午也要活力满满哦~'};
                 } else if (hour >= 17 && hour < 19) {

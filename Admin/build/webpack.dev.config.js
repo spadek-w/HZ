@@ -34,5 +34,15 @@ module.exports = merge(webpackBaseConfig, {
             template: './index.ejs',
             inject: false
         })
-    ]
+    ],
+    devServer: {
+        proxy: {
+            '/api': {
+                target: 'http://api.livevideo.com:8080',
+                secure: false,
+                changeOrigin: true,
+                pathRewrite: { '^/api': '' }
+            }
+        }
+    }
 });
