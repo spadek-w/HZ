@@ -1,11 +1,10 @@
 import axios from 'axios';
 import env from 'common/config/env';
 
-let util = {
+let layout = {};
 
-};
-util.title = function (title) {
-    title = title || 'iView admin';
+layout.title = function (title) {
+    title = title || 'Admin Index';
     window.document.title = title;
 };
 
@@ -15,12 +14,12 @@ const ajaxUrl = env === 'development'
     ? 'https://www.url.com'
     : 'https://debug.url.com';
 
-util.ajax = axios.create({
+layout.ajax = axios.create({
     baseURL: ajaxUrl,
     timeout: 30000
 });
 
-util.inOf = function (arr, targetArr) {
+layout.inOf = function (arr, targetArr) {
     let res = true;
     arr.map(item => {
         if (targetArr.indexOf(item) < 0) {
@@ -30,7 +29,7 @@ util.inOf = function (arr, targetArr) {
     return res;
 };
 
-util.oneOf = function (ele, targetArr) {
+layout.oneOf = function (ele, targetArr) {
     if (targetArr.indexOf(ele) >= 0) {
         return true;
     } else {
@@ -38,15 +37,15 @@ util.oneOf = function (ele, targetArr) {
     }
 };
 
-util.showThisRoute = function (itAccess, currentAccess) {
+layout.showThisRoute = function (itAccess, currentAccess) {
     if (typeof itAccess === 'object' && itAccess.isArray()) {
-        return util.oneOf(currentAccess, itAccess);
+        return layout.oneOf(currentAccess, itAccess);
     } else {
         return itAccess === currentAccess;
     }
 };
 
-util.getRouterObjByName = function (routers, name) {
+layout.getRouterObjByName = function (routers, name) {
     let routerObj = {};
     routers.forEach(item => {
         if (item.name === 'otherRouter') {
@@ -72,7 +71,7 @@ util.getRouterObjByName = function (routers, name) {
     return routerObj;
 };
 
-util.handleTitle = function (vm, item) {
+layout.handleTitle = function (vm, item) {
     if (typeof item.title === 'object') {
         return vm.$t(item.title.i18n);
     } else {
@@ -80,13 +79,13 @@ util.handleTitle = function (vm, item) {
     }
 };
 
-util.setCurrentPath = function (vm, name) {
+layout.setCurrentPath = function (vm, name) {
     let title = '';
     let isOtherRouter = false;
     vm.$store.state.routers.forEach(item => {
         if (item.children.length === 1) {
             if (item.children[0].name === name) {
-                title = util.handleTitle(vm, item);
+                title = layout.handleTitle(vm, item);
                 if (item.name === 'otherRouter') {
                     isOtherRouter = true;
                 }
@@ -94,7 +93,7 @@ util.setCurrentPath = function (vm, name) {
         } else {
             item.children.forEach(child => {
                 if (child.name === name) {
-                    title = util.handleTitle(vm, child);
+                    title = layout.handleTitle(vm, child);
                     if (item.name === 'otherRouter') {
                         isOtherRouter = true;
                     }
@@ -106,7 +105,7 @@ util.setCurrentPath = function (vm, name) {
     if (name === 'home_index') {
         currentPathArr = [
             {
-                title: util.handleTitle(vm, util.getRouterObjByName(vm.$store.state.routers, 'home_index')),
+                title: layout.handleTitle(vm, layout.getRouterObjByName(vm.$store.state.routers, 'home_index')),
                 path: '',
                 name: 'home_index'
             }
@@ -114,7 +113,7 @@ util.setCurrentPath = function (vm, name) {
     } else if ((name.indexOf('_index') >= 0 || isOtherRouter) && name !== 'home_index') {
         currentPathArr = [
             {
-                title: util.handleTitle(vm, util.getRouterObjByName(vm.$store.state.routers, 'home_index')),
+                title: layout.handleTitle(vm, layout.getRouterObjByName(vm.$store.state.routers, 'home_index')),
                 path: '/home',
                 name: 'home_index'
             },
@@ -190,7 +189,7 @@ util.setCurrentPath = function (vm, name) {
     return currentPathArr;
 };
 
-util.openNewPage = function (vm, name, argu, query) {
+layout.openNewPage = function (vm, name, argu, query) {
     let pageOpenedList = vm.$store.state.pageOpenedList;
     let openedPageLen = pageOpenedList.length;
     let i = 0;
@@ -228,7 +227,7 @@ util.openNewPage = function (vm, name, argu, query) {
     vm.$store.commit('setCurrentPageName', name);
 };
 
-util.toDefaultPage = function (routers, name, route, next) {
+layout.toDefaultPage = function (routers, name, route, next) {
     let len = routers.length;
     let i = 0;
     let notHandle = true;
@@ -248,4 +247,4 @@ util.toDefaultPage = function (routers, name, route, next) {
     }
 };
 
-export default util;
+export default layout;

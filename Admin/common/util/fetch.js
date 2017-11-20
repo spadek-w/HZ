@@ -11,21 +11,20 @@ export function fetch (options) {
                 'Content-Type': 'application/json'
             }
         });
-        Message.error('请求一次');
+        Message.info('请求一次');
         request(options)
             .then((response) => {
-                console.log(response);
-                Message.error('返回一次');
+                Message.success('返回一次');
                 if (response['status'] === 200 && response['data']['success'] === true) {
                     resolve(response['data']['data']);
                 } else {
                     let error = response['data']['error'];
-                    Message.error(error);
+                    Message.warning(error['msg']);
                 }
             })
             .catch(error => {
-                console.log(error);
-                Message.error('请求失败!');
+                console.trace(error);
+                Message.warning('请求失败!');
             });
     });
 }

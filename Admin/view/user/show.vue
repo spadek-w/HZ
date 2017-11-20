@@ -1,10 +1,13 @@
 <template>
-   <div>用户详情展示页面（模态框展示）</div>
+   <Card shadow :bordered="false">
+       用户详情
+    
+    </Card>
 </template>
 
 <script>
 export default {
-    name: 'kvdb',
+    name: 'usershow',
     components: {
 
     },

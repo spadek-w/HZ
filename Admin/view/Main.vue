@@ -80,8 +80,8 @@
     import themeDropdownMenu from './layout/themeDropdownMenu.vue';
     import sidebarMenuShrink from './layout/sidebarMenuShrink.vue';
     import Cookies from 'js-cookie';
-    import util from 'common/libs/util.js';
-    
+    import layout from 'common/util/layout';
+
     export default {
         components: {
             sidebarMenu,
@@ -134,7 +134,7 @@
         methods: {
             init () {
                 this.$store.commit('setCurrentPageName', this.$route.name);
-                let pathArr = util.setCurrentPath(this, this.$route.name);
+                let pathArr = layout.setCurrentPath(this, this.$route.name);
                 if (pathArr.length >= 2) {
                     this.$store.commit('addOpenSubmenu', pathArr[1].name);
                 }
@@ -148,7 +148,7 @@
             },
             handleClickUserDropdown (name) {
                 if (name === 'ownSpace') {
-                    util.openNewPage(this, 'ownspace_index');
+                    layout.openNewPage(this, 'ownspace_index');
                     this.$router.push({
                         name: 'ownspace_index'
                     });
@@ -182,7 +182,7 @@
                 // this.$store.commit('changeFullScreenState');
             },
             showMessage () {
-                util.openNewPage(this, 'message_index');
+                layout.openNewPage(this, 'message_index');
                 this.$router.push({
                     name: 'message_index'
                 });
@@ -209,21 +209,21 @@
                     }
                 });
                 if (!openpageHasTag) {  //  解决关闭当前标签后再点击回退按钮会退到当前页时没有标签的问题
-                    util.openNewPage(this, name, this.$route.params || {}, this.$route.query || {});
+                    layout.openNewPage(this, name, this.$route.params || {}, this.$route.query || {});
                 }
             }
         },
         watch: {
             '$route' (to) {
                 this.$store.commit('setCurrentPageName', to.name);
-                let pathArr = util.setCurrentPath(this, to.name);
+                let pathArr = layout.setCurrentPath(this, to.name);
                 if (pathArr.length > 2) {
                     this.$store.commit('addOpenSubmenu', pathArr[1].name);
                 }
                 this.checkTag(to.name);
             },
             lang () {
-                util.setCurrentPath(this, this.$route.name);  // 在切换语言时用于刷新面包屑
+                layout.setCurrentPath(this, this.$route.name);  // 在切换语言时用于刷新面包屑
             }
         },
         mounted () {

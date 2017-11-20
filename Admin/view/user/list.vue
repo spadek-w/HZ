@@ -1,27 +1,28 @@
 <template>
-    <div class="wrapper-content">
-        <Card shadow :bordered="false">
-            <!-- 顶部工具条 -->
-            <Row  class="table-seach-box" height>
-                <Input v-model="kw"  placeholder="请输入对象" style="width: 320px">
-                    <Select v-model="filter"  clearable slot="prepend" style="width: 100px">
-                        <Option value="ALL" key="AL'" > 全部 </Option>
-                        <Option v-for="key of fields.like" :value="key" :key="key"> {{ attrs[key]["title"]}} </Option>
-                    </Select>
-                    <Button slot="append" icon="ios-search"  @click="search"></Button>
-                </Input>
-                <Button class="margin-right-sm" type="primary">新增</Button>
-            </Row>
-            <!-- 表格  -->
-            <Table border :loading="loading" :columns="columns" :height="size>10? 500 : '' " :data="rows"></Table>
-            <!-- 底部工具条 -->
-            <div style="margin: 10px;overflow: hidden">
-                <div style="float: right;">
-                    <Page :total="total" :page-size="size" :current='page' show-sizer show-total show-elevator  @on-change="onPageChange" @on-page-size-change="onSizeChange"></Page>
-                </div>
+    
+    <Card shadow :bordered="false">
+        <!-- 顶部工具条 -->
+        <Row  class="table-seach-box" height>
+            <Input v-model="kw"  placeholder="请输入对象" style="width: 320px">
+            
+                <Select v-model="filter"  clearable slot="prepend" style="width: 100px">
+                    <Option value="ALL" key="AL'" > 全部 </Option>
+                    <Option v-for="key of fields.like" :value="key" :key="key"> {{ attrs[key]["title"] || key }} </Option>
+                </Select>
+                <Button slot="append" icon="ios-search"  @click="search"></Button>
+            </Input>
+            <Button class="margin-right-sm" type="primary">新增</Button>
+        </Row>
+        <!-- 表格  -->
+        <Table border :loading="loading" :columns="columns" :height="size>10? 500 : '' " :data="rows"></Table>
+        <!-- 底部工具条 -->
+        <div style="margin: 10px;overflow: hidden">
+            <div style="float: right;">
+                <Page :total="total" :page-size="size" :current='page' show-sizer show-total show-elevator  @on-change="onPageChange" @on-page-size-change="onSizeChange"></Page>
             </div>
-        </Card>
-    </div>
+        </div>
+    </Card>
+    
 </template>
 
 <script>
@@ -66,6 +67,7 @@ export default {
             this.fields.edit = tableModel["edit"];
             this.fields.show = tableModel["show"];
             this.fields.like = tableModel["like"];
+            this.fields.must = tableModel["must"];
             this.fields.match = tableModel["match"];
             this.fields.order = tableModel["order"];
             this.changeColumns();
@@ -98,8 +100,7 @@ export default {
             params["page"] = this.page;
             params["filter"] = this.filter;
             //获取数据
-            console.log(params)
-            fetchUserList(params).then(data=>{
+            fetchUserList(params).then(data => {
                 this.rows = data["rows"];
                 this.total = data["total"];
                 this.loading = false;
@@ -108,6 +109,7 @@ export default {
 
         // 展示详情
         showInfo(index) {
+            // todo 打开新页面展示
             var params = { username: this.rows[index].username };
             getUserInfo(params).then(res => {
                 this.curUser = res.data;
@@ -119,17 +121,26 @@ export default {
             alert("删除" + index);
             this.rows.splice(index, 1);
         },
-        //批量删除
+        //批量删除（多选）
+        batchRemove(){
 
-        // 变更队列
+        },
+
+        // 初始化表单列 （或更新）
         changeColumns(){
             let attrs = {};
             let columns = [];
+             columns.push({
+                type: 'selection',
+                width: 60,
+                align: 'center',
+                fixed:"left",
+            })
             for(let col of tableModel["columns"]){
                 if(!!~this.show.indexOf(col["key"])){
                     columns.push(col);
-                    attrs[col["key"]] = col;
                 }
+                attrs[col["key"]] = col;
             }
             this.attrs = attrs;
             columns.push({
@@ -155,9 +166,7 @@ export default {
             });
             this.columns=columns;
         },
-    },
-     
-
+    }
 };
 </script>
 <style lang="less">

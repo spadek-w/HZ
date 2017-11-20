@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import util from 'common/libs/util';
+import layout from 'common/util/layout';
 import Vue from 'vue';
 import VueI18n from 'vue-i18n';
 Vue.use(VueI18n);
@@ -55,7 +55,7 @@ export default {
     methods: {
         changeMenu (active) {
             if (active !== 'accesstest_index') {
-                util.openNewPage(this, active);
+                layout.openNewPage(this, active);
                 this.$router.push({
                     name: active
                 });

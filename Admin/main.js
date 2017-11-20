@@ -1,9 +1,11 @@
 import Vue from 'vue';
 import iView from 'iview';
 import VueRouter from 'vue-router';
+import layout from 'common/util/layout';
+
 import {routers, otherRouter, appRouter} from './router';
 import Vuex from 'vuex';
-import Util from 'common/libs/util';
+
 import App from './app.vue';
 import Cookies from 'js-cookie';
 import 'iview/dist/styles/iview.css';
@@ -13,6 +15,7 @@ import Locales from 'common/lang/locale';
 import zhLocale from 'iview/src/locale/lang/zh-CN';
 import enLocale from 'iview/src/locale/lang/en-US';
 import zhTLocale from 'iview/src/locale/lang/zh-TW';
+
 
 Vue.use(VueRouter);
 Vue.use(Vuex);
@@ -45,7 +48,7 @@ const router = new VueRouter(RouterConfig);
 
 router.beforeEach((to, from, next) => {
     iView.LoadingBar.start();
-    Util.title(to.meta.title);
+    layout.title(to.meta.title);
     if (Cookies.get('locking') === '1' && to.name !== 'locking') {  // 判断当前是否是锁定状态
         next(false);
         router.replace({
@@ -59,14 +62,14 @@ router.beforeEach((to, from, next) => {
                 name: 'login'
             });
         } else if (Cookies.get('user') && to.name === 'login') {  // 判断是否已经登录且前往的是登录页
-            Util.title();
+            layout.title();
             next({
                 name: 'home_index'
             });
         } else {
-            if (Util.getRouterObjByName([otherRouter, ...appRouter], to.name).access !== undefined) {  // 判断用户是否有权限访问当前页
-                if (Util.getRouterObjByName([otherRouter, ...appRouter], to.name).access === parseInt(Cookies.get('access'))) {
-                    Util.toDefaultPage([otherRouter, ...appRouter], to.name, router, next);  // 如果在地址栏输入的是一级菜单则默认打开其第一个二级菜单的页面
+            if (layout.getRouterObjByName([otherRouter, ...appRouter], to.name).access !== undefined) {  // 判断用户是否有权限访问当前页
+                if (layout.getRouterObjByName([otherRouter, ...appRouter], to.name).access === parseInt(Cookies.get('access'))) {
+                    layout.toDefaultPage([otherRouter, ...appRouter], to.name, router, next);  // 如果在地址栏输入的是一级菜单则默认打开其第一个二级菜单的页面
                 } else {
                     router.replace({
                         name: 'error_401'
@@ -74,7 +77,7 @@ router.beforeEach((to, from, next) => {
                     next();
                 }
             } else {
-                Util.toDefaultPage([otherRouter, ...appRouter], to.name, router, next);
+                layout.toDefaultPage([otherRouter, ...appRouter], to.name, router, next);
             }
         }
     }
@@ -130,7 +133,7 @@ const store = new Vuex.Store({
             });
         },
         increateTag (state, tagObj) {
-            if (!Util.oneOf(tagObj.name, state.dontCache)) {
+            if (!layout.oneOf(tagObj.name, state.dontCache)) {
                 state.cachePage.push(tagObj.name);
                 localStorage.cachePage = JSON.stringify(state.cachePage);
             }
@@ -232,7 +235,7 @@ const store = new Vuex.Store({
             let menuList = [];
             appRouter.forEach((item, index) => {
                 if (item.access !== undefined) {
-                    if (Util.showThisRoute(item.access, accessCode)) {
+                    if (layout.showThisRoute(item.access, accessCode)) {
                         if (item.children.length === 1) {
                             menuList.push(item);
                         } else {
@@ -258,7 +261,7 @@ const store = new Vuex.Store({
                         let childrenArr = [];
                         childrenArr = item.children.filter(child => {
                             if (child.access !== undefined) {
-                                if (Util.showThisRoute(child.access, accessCode)) {
+                                if (layout.showThisRoute(child.access, accessCode)) {
                                     return child;
                                 }
                             } else {

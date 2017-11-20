@@ -21,9 +21,10 @@ export const appRouter = [
         access: 0, // 访问权限
         component: Main,
         children: [
-            { path: 'index', title: '概览', icon: 'shuffle', name: 'user_index', component: resolve => { require(['./view/user/index.vue'], resolve); } },
-            { path: 'list', title: '列表', icon: 'ios-list', name: 'user_list', component: resolve => { require(['./view/user/list.vue'], resolve); } },
-            { path: 'show', title: '详情', icon: 'ios-browsers', name: 'user_show', component: resolve => { require(['./view/user/show.vue'], resolve); } }
+            { path: 'index', title: '用户概览', icon: 'shuffle', name: 'user_index', component: resolve => { require(['./view/user/index.vue'], resolve); } },
+            { path: 'list', title: '用户列表', icon: 'ios-list', name: 'user_list', component: resolve => { require(['./view/user/list.vue'], resolve); } },
+            { path: 'show', title: '用户详情', icon: 'ios-browsers', name: 'user_show', component: resolve => { require(['./view/user/show.vue'], resolve); } },
+            { path: 'edit', title: '编辑用户', icon: 'ios-browsers', name: 'user_edit', component: resolve => { require(['./view/user/edit.vue'], resolve); } }
         ]
     },
     {
@@ -34,9 +35,9 @@ export const appRouter = [
         access: 0,
         component: Main,
         children: [
-            { path: 'index', title: '概览', icon: 'shuffle', name: 'live_index', component: resolve => { require(['./view/user/index.vue'], resolve); } },
-            { path: 'list', title: '列表', icon: 'ios-list', name: 'live_list', component: resolve => { require(['./view/user/list.vue'], resolve); } },
-            { path: 'show', title: '详情', icon: 'ios-browsers', name: 'live_show', component: resolve => { require(['./view/user/show.vue'], resolve); } }
+            { path: 'index', title: '直播概览', icon: 'shuffle', name: 'live_index', component: resolve => { require(['./view/user/index.vue'], resolve); } },
+            { path: 'list', title: '直播列表', icon: 'ios-list', name: 'live_list', component: resolve => { require(['./view/user/list.vue'], resolve); } },
+            { path: 'show', title: '直播详情', icon: 'ios-browsers', name: 'live_show', component: resolve => { require(['./view/user/show.vue'], resolve); } }
         ]
     },
     {
@@ -47,9 +48,9 @@ export const appRouter = [
         access: 0,
         component: Main,
         children: [
-            { path: 'index', title: '概览', icon: 'shuffle', name: 'video_index', component: resolve => { require(['./view/user/index.vue'], resolve); } },
-            { path: 'list', title: '列表', icon: 'ios-list', name: 'video_list', component: resolve => { require(['./view/user/list.vue'], resolve); } },
-            { path: 'show', title: '详情', icon: 'ios-browsers', name: 'video_show', component: resolve => { require(['./view/user/show.vue'], resolve); } }
+            { path: 'index', title: '视频概览', icon: 'shuffle', name: 'video_index', component: resolve => { require(['./view/user/index.vue'], resolve); } },
+            { path: 'list', title: '视频列表', icon: 'ios-list', name: 'video_list', component: resolve => { require(['./view/user/list.vue'], resolve); } },
+            { path: 'show', title: '视频详情', icon: 'ios-browsers', name: 'video_show', component: resolve => { require(['./view/user/show.vue'], resolve); } }
         ]
     },
     {
@@ -86,8 +87,8 @@ export const appRouter = [
         access: 0,
         component: Main,
         children: [
-            { path: 'index', title: '概览', icon: 'shuffle', name: 'tool_index', component: resolve => { require(['./view/user/index.vue'], resolve); } },
-            { path: 'error', title: '错误', icon: 'bug', name: 'tool_error', component: resolve => { require(['./view/tool/error.vue'], resolve); } },
+            { path: 'index', title: '系统状态', icon: 'shuffle', name: 'tool_index', component: resolve => { require(['./view/user/index.vue'], resolve); } },
+            { path: 'error', title: '错误类型', icon: 'bug', name: 'tool_error', component: resolve => { require(['./view/tool/error.vue'], resolve); } },
             { path: 'show', title: '详情', icon: 'ios-browsers', name: 'tool_show', component: resolve => { require(['./view/user/show.vue'], resolve); } }
         ]
     }
