@@ -8,10 +8,14 @@ function resolve (dir) {
 
 module.exports = {
     entry: {
+        //入口
         main: './main',
+        //设置第三方入口
         vendors: './vendors'
     },
+    //出口
     output: {
+        //资源目录
         path: path.join(__dirname, '../dist')
     },
     module: {
@@ -37,6 +41,7 @@ module.exports = {
             test: /iview\/.*?js$/,
             loader: 'babel-loader'
         },
+        //处理js
         {
             test: /\.js$/,
             loader: 'babel-loader',

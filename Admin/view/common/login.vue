@@ -64,9 +64,11 @@ export default {
                     } else {
                         Cookies.set('access', 1);
                     }
-                    this.$router.push({
-                        name: 'home_index'
-                    });
+                    // this.$router.push({
+                    //     name: 'home_index'
+                    // });
+                    location.hash="#/home"
+                    console.log(location.hash)
                 }
             });
         }
